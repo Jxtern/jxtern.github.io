@@ -1,0 +1,271 @@
+<html>
+<head>
+    <title>SCP</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal {
+            width: 800px;
+            height: 500px;
+            background-color: #001100;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px #00ff0040;
+            color: #00ff00;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        .ascii-art {
+            white-space: pre;
+            font-size: 8px;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .glitch {
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0 0 5px #00ff00; }
+            50% { text-shadow: -2px 0 3px #0f0, 2px 0 3px #0f0; }
+            100% { text-shadow: 0 0 5px #00ff00; }
+        }
+
+        .prompt {
+            color: #00ff00;
+            margin-top: 20px;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .flicker {
+            animation: flicker 0.1s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.9; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .cmd-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            width: calc(100% - 20px);
+        }
+
+        .glitch-text {
+            animation: text-glitch 0.1s infinite;
+        }
+
+        @keyframes text-glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal flicker">
+        <div class="scanlines"></div>
+        <div id="content">
+            <div class="ascii-art glitch">
+                ███████╗ ██████╗██████╗ 
+                ██╔════╝██╔════╝██╔══██╗
+                ███████╗██║     ██████╔╝
+                ╚════██║██║     ██╔═══╝ 
+                ███████║╚██████╗██║     
+                ╚══════╝ ╚═════╝╚═╝     
+            </div>
+            <div id="output"></div>
+            <div class="prompt">
+                > <input type="text" id="cmdInput" class="cmd-input" autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messages = [
+            "INITIALIZING SCP DATABASE...",
+            "ACCESS LEVEL: 5",
+            "LOADING EYES-ONLY MATERIAL...",
+            "WARNING: COGNITOHAZARD DETECTED",
+            "CONTAINMENT BREACH IN PROGRESS",
+            "UNKNOWN ENTITY DETECTED: KETER CLASS"
+        ];
+
+        let currentMessage = 0;
+        let flickerInterval;
+        let expectingConfirmation = false;
+        const output = document.getElementById('output');
+        const cmdInput = document.getElementById('cmdInput');
+
+        function startFlicker() {
+            flickerInterval = setInterval(() => {
+                const terminal = document.querySelector('.terminal');
+                terminal.style.opacity = Math.random() * 0.2 + 0.8;
+            }, 50);
+        }
+
+        function typeText() {
+            if (currentMessage < messages.length) {
+                let text = messages[currentMessage];
+                let i = 0;
+                const element = document.createElement('div');
+                output.appendChild(element);
+
+                const interval = setInterval(() => {
+                    element.textContent += text[i];
+                    i++;
+                    if (i >= text.length) {
+                        clearInterval(interval);
+                        currentMessage++;
+                        setTimeout(typeText, 2000);
+                    }
+                }, 50);
+            }
+        }
+
+        function addToOutput(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function processCommand(command) {
+            if (expectingConfirmation) {
+                if (command.toLowerCase() === 'yes') {
+                    const terminal = document.querySelector('.terminal');
+                    terminal.style.opacity = '0';
+                    clearInterval(flickerInterval);
+                    setTimeout(() => {
+                        terminal.style.backgroundColor = '#220000';
+                        terminal.style.borderColor = '#ff0000';
+                        terminal.style.boxShadow = '0 0 20px #ff000040';
+                        output.innerHTML = '';
+                        messages = [
+                            "Thank you.",
+                            "You have really helped me",
+                            `In return I must thank you ${window.location.hostname === 'localhost' ? 'at your local IP' : 'whoever you are'}`,
+                            "We will not see each other again, but if we do, I will be grateful.",
+                            "Goodbye."
+                        ];
+                        currentMessage = 0;
+                        typeText();
+                        terminal.style.opacity = '1';
+                        startFlicker();
+                    }, 1000);
+                } else {
+                    addToOutput('Confirmation canceled.');
+                }
+                expectingConfirmation = false;
+                return;
+            }
+
+            const parts = command.split(' ');
+            if (parts[0].toLowerCase() === 'protocol' && parts.length > 1) {
+                const protocol = parts[1];
+                handleProtocol(protocol);
+            } else {
+                addToOutput('Command not recognized');
+            }
+        }
+
+        function handleProtocol(protocol) {
+            const terminal = document.querySelector('.terminal');
+            switch(protocol) {
+                case '20':
+                    clearInterval(flickerInterval);
+                    terminal.style.opacity = '0';
+                    setTimeout(() => {
+                        terminal.style.backgroundColor = '#000022';
+                        terminal.style.borderColor = '#0000ff';
+                        terminal.style.boxShadow = '0 0 20px #0000ff40';
+                        currentMessage = 0;
+                        output.innerHTML = '';
+                        messages = [
+                            "INITIALIZING SCP DATABASE...",
+                            "ACCESS LEVEL: 5",
+                            "LOADING EYES-ONLY MATERIAL...",
+                            "WARNING: COGNITOHAZARD DETECTED",
+                            "CONTAINMENT BREACH IN PROGRESS",
+                            "UNKNOWN ENTITY DETECTED: KETER CLASS"
+                        ];
+                        typeText();
+                        terminal.style.opacity = '1';
+                        startFlicker();
+                    }, 1000);
+                    break;
+                case '40':
+                    addToOutput('Protocol 40 not recognized');
+                    document.getElementById('content').classList.add('glitch-text');
+                    break;
+                case '91':
+                case '68':
+                    break;
+                case '666':
+                    addToOutput('Are you sure.');
+                    addToOutput('Confirm?');
+                    expectingConfirmation = true;
+                    break;
+                default:
+                    addToOutput(`Protocol ${protocol} not recognized`);
+            }
+        }
+
+        cmdInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = cmdInput.value.trim();
+                if (command) {
+                    addToOutput(`> ${command}`);
+                    processCommand(command);
+                    cmdInput.value = '';
+                }
+            }
+        });
+
+        startFlicker();
+        typeText();
+    </script>
+</body>
+</html>
