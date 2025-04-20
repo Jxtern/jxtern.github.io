@@ -160,7 +160,7 @@
         ];
         const messageEl = document.querySelector('.message');
         setInterval(() => {
-            if(Math.random() > 0.9) {
+            if(Math.random() > 0.5) {
                 const randomMsg = messages[Math.floor(Math.random() * messages.length)];
                 messageEl.textContent = randomMsg;
                 setTimeout(() => {
