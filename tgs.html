@@ -1,0 +1,221 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TGS</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .terminal {
+            width: 80%;
+            max-width: 800px;
+            background-color: #252525;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .red {
+            background-color: #ff5f56;
+        }
+        
+        .yellow {
+            background-color: #ffbd2e;
+        }
+        
+        .green {
+            background-color: #27c93f;
+        }
+        
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #808080;
+        }
+        
+        .terminal-body {
+            line-height: 1.5;
+        }
+        
+        .prompt {
+            color: #4af626;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #f0f0f0;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+        
+        #command-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #f0f0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            outline: none;
+            padding: 0 5px;
+        }
+        
+        .output {
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        
+        .search-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .search-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-button red"></div>
+            <div class="terminal-button yellow"></div>
+            <div class="terminal-button green"></div>
+            <div class="terminal-title">Google Search</div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+            <div class="output">Welcome to the Terminal. Type your query and press Enter.</div>
+            <div class="input-line">
+                <span class="prompt">$</span>
+                <input type="text" id="command-input" autofocus>
+                <span class="cursor"></span>
+            </div>
+            <button class="search-btn" id="search-btn" style="display: none;">Search on Google</button>
+        </div>
+    </div>
+
+    <script>
+        const commandInput = document.getElementById('command-input');
+        const terminalBody = document.getElementById('terminal-body');
+        const searchBtn = document.getElementById('search-btn');
+        let currentQuery = '';
+        
+        commandInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                currentQuery = commandInput.value.trim();
+                
+                if (currentQuery) {
+                    const commandLine = document.createElement('div');
+                    commandLine.className = 'output';
+                    commandLine.textContent = `$ ${currentQuery}`;
+                    terminalBody.insertBefore(commandLine, commandInput.parentNode.nextSibling);
+                    
+                    const searchingLine = document.createElement('div');
+                    searchingLine.className = 'output';
+                    searchingLine.textContent = `Searching for: "${currentQuery}"`;
+                    terminalBody.insertBefore(searchingLine, commandInput.parentNode.nextSibling);
+                    
+                    searchBtn.style.display = 'inline-block';
+                    
+                    commandInput.value = '';
+                }
+            }
+        });
+        
+        searchBtn.addEventListener('click', () => {
+            if (currentQuery) {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(currentQuery)}`, '_blank');
+                
+                const searchPerformed = document.createElement('div');
+                searchPerformed.className = 'output';
+                searchPerformed.textContent = `Opened Google search for: "${currentQuery}"`;
+                terminalBody.insertBefore(searchPerformed, searchBtn.nextSibling);
+                
+                searchBtn.style.display = 'none';
+                
+                const newInputLine = document.createElement('div');
+                newInputLine.className = 'input-line';
+                newInputLine.innerHTML = `
+                    <span class="prompt">$</span>
+                    <input type="text" class="command-input" autofocus>
+                    <span class="cursor"></span>
+                `;
+                terminalBody.appendChild(newInputLine);
+                
+                const newInput = newInputLine.querySelector('.command-input');
+                newInput.focus();
+                
+                newInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        currentQuery = this.value.trim();
+                        
+                        if (currentQuery) {
+                            const commandLine = document.createElement('div');
+                            commandLine.className = 'output';
+                            commandLine.textContent = `$ ${currentQuery}`;
+                            terminalBody.insertBefore(commandLine, this.parentNode.nextSibling);
+                            
+                            const searchingLine = document.createElement('div');
+                            searchingLine.className = 'output';
+                            searchingLine.textContent = `Searching for: "${currentQuery}"`;
+                            terminalBody.insertBefore(searchingLine, this.parentNode.nextSibling);
+                            
+                            searchBtn.style.display = 'inline-block';
+                            
+                            terminalBody.removeChild(this.parentNode);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
