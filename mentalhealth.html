@@ -1,0 +1,148 @@
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #content {
+            font-size: 2em;
+            padding: 20px;
+            max-width: 800px;
+            min-height: 200px;
+        }
+
+        #startBtn {
+            font-size: 2em;
+            padding: 15px 30px;
+            margin: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        #startBtn:hover {
+            transform: scale(1.05);
+        }
+
+        #warning {
+            color: red;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .highlight-effect {
+            animation: highlight 0.5s linear 2;
+        }
+
+        @keyframes highlight {
+            0% { color: white; }
+            50% { color: #ff6b6b; }
+            100% { color: white; }
+        }
+
+        .red {
+            color: #ff6b6b;
+        }
+
+        a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="warning">
+        WARNING: This contains topics of mental health. If you are one of these people, I love you, know that there are other people out there that love you too and reach out to one of the hotlines near you: <a href="https://findahelpline.com">https://findahelpline.com</a>
+    </div>
+
+    <button id="startBtn">Begin?</button>
+    <div id="content"></div>
+
+    <script>
+        const messages = [
+            "Mental health is a serious issue, and may is the mental health awareness month.",
+            "There is approximately over 8 million deaths per YEAR",
+            "8 million deaths per year",
+            "due to mental health.",
+            "one of the most common deaths from mental health is <span class='red'>SUICIDE</span>",
+            {text: "suicide", effect: 'highlight'},
+            "kids as young as 3 YEARS old",
+            "are, getting, diagnosed, with, a, type, of, mental, health, illness",
+            "more kids and adults die from suicide than from",
+            "cancer, strokes, lung failure, heart disease, & influenza",
+            "COMBINED.",
+            "somebody takes their own life every",
+            "43, SECONDS.",
+            "Mental health can ruin your life so bad, to where you try to commit",
+            "some people suffer in silence, even the most suicidal people give good advice",
+            "REACH OUT TO SOMEONE,",
+            "ANYONE",
+            "A STRANGER EVEN",
+            "YOU'RE, NOT, ALONE",
+            "Made by J_xtern, reach out to me through other means if you have a hard time."
+        ];
+
+        let currentIndex = 0;
+        const content = document.getElementById('content');
+        let audioFrame = null;
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            audioFrame = document.createElement('iframe');
+            audioFrame.style.display = 'none';
+            audioFrame.src = 'https://www.youtube.com/embed/EPOKo1KxV_E?autoplay=1';
+            document.body.appendChild(audioFrame);
+
+            document.getElementById('warning').style.display = 'none';
+            document.getElementById('startBtn').style.display = 'none';
+            
+            showNextMessage();
+        });
+
+        function showNextMessage() {
+            if (currentIndex >= messages.length) return;
+
+            content.innerHTML = '';
+            const message = messages[currentIndex];
+
+            if (typeof message === 'object') {
+                content.innerHTML = message.text;
+                if (message.effect === 'highlight') {
+                    content.classList.add('highlight-effect');
+                    setTimeout(() => content.classList.remove('highlight-effect'), 1000);
+                }
+                currentIndex++;
+                setTimeout(showNextMessage, 3000);
+            } else {
+                const parts = message.split(',');
+                parts.forEach((part, i) => {
+                    setTimeout(() => {
+                        content.innerHTML += part.trim() + (i < parts.length-1 ? ' ' : '');
+                    }, i * 600);
+                });
+                
+                currentIndex++;
+                setTimeout(showNextMessage, parts.length * 600 + 2400);
+            }
+        }
+    </script>
+</body>
+</html>
