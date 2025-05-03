@@ -130,13 +130,13 @@
                     setTimeout(() => content.classList.remove('highlight-effect'), 1000);
                 }
                 currentIndex++;
-                setTimeout(showNextMessage, 3000);
+                setTimeout(showNextMessage, 4500);
             } else {
                 const parts = message.split(',');
                 parts.forEach((part, i) => {
                     setTimeout(() => {
                         content.innerHTML += part.trim() + (i < parts.length-1 ? ' ' : '');
-                    }, i * 600);
+                    }, i * 850);
                 });
                 
                 currentIndex++;
