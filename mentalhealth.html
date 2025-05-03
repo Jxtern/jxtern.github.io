@@ -76,41 +76,68 @@
 
     <button id="startBtn">Begin?</button>
     <div id="content"></div>
+    <div id="player"></div>
 
     <script>
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'EPOKo1KxV_E',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'loop': 1,
+                    'modestbranding': 1,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+        }
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
         const messages = [
-            "Mental health is a serious issue, and may is the mental health awareness month.",
-            "There is approximately over 8 million deaths per YEAR",
-            "8 million deaths per year",
-            "due to mental health.",
-            "one of the most common deaths from mental health is <span class='red'>SUICIDE</span>",
-            {text: "suicide", effect: 'highlight'},
-            "kids as young as 3 YEARS old",
-            "are, getting, diagnosed, with, a, type, of, mental, health, illness",
-            "more kids and adults die from suicide than from",
-            "cancer, strokes, lung failure, heart disease, & influenza",
-            "COMBINED.",
-            "somebody takes their own life every",
-            "43, SECONDS.",
-            "Mental health can ruin your life so bad, to where you try to commit",
-            "some people suffer in silence, even the most suicidal people give good advice",
-            "REACH OUT TO SOMEONE,",
-            "ANYONE",
-            "A STRANGER EVEN",
-            "YOU'RE, NOT, ALONE",
-            "Made by J_xtern, reach out to me through other means if you have a hard time."
+            ["Mental health is", " a serious issue", " and May is", " the mental health awareness month"],
+            ["There is approximately", " over 8 million deaths", " per YEAR"],
+            ["8 million deaths", " per year"],
+            ["due to", " mental health"],
+            ["one of the most common deaths", " from mental health is ", "<span class='red'>SUICIDE</span>"],
+            {text: ["suicide"], effect: 'highlight'},
+            ["kids as young as", " 3 YEARS old"],
+            ["are", " getting", " diagnosed", " with", " a", " type", " of", " mental", " health", " illness"],
+            ["more kids and adults die", " from suicide than from"],
+            ["cancer", ", strokes", ", lung failure", ", heart disease", ", & influenza"],
+            ["COMBINED."],
+            ["somebody takes their own life every"],
+            ["43", " SECONDS."],
+            ["Mental health can ruin your life", " so bad", " to where you try to commit"],
+            ["some people suffer in silence", " even the most suicidal people", " give good advice"],
+            ["REACH OUT TO SOMEONE"],
+            ["ANYONE"],
+            ["A STRANGER EVEN"],
+            ["YOU'RE", " NOT", " ALONE"],
+            ["Made by J_xtern", " reach out to me", " through other means", " if you have a hard time"]
         ];
 
         let currentIndex = 0;
         const content = document.getElementById('content');
-        let audioFrame = null;
 
         document.getElementById('startBtn').addEventListener('click', () => {
-            audioFrame = document.createElement('iframe');
-            audioFrame.style.display = 'none';
-            audioFrame.src = 'https://www.youtube.com/embed/EPOKo1KxV_E?autoplay=1';
-            document.body.appendChild(audioFrame);
-
+            player.setVolume(50);
+            player.playVideo();
+            
             document.getElementById('warning').style.display = 'none';
             document.getElementById('startBtn').style.display = 'none';
             
@@ -123,24 +150,28 @@
             content.innerHTML = '';
             const message = messages[currentIndex];
 
-            if (typeof message === 'object') {
-                content.innerHTML = message.text;
-                if (message.effect === 'highlight') {
-                    content.classList.add('highlight-effect');
-                    setTimeout(() => content.classList.remove('highlight-effect'), 1000);
-                }
+            if (typeof message === 'object' && message.effect) {
+                content.innerHTML = message.text.join(''); 
+                content.classList.add('highlight-effect');
+                setTimeout(() => content.classList.remove('highlight-effect'), 1000);
                 currentIndex++;
-                setTimeout(showNextMessage, 4500);
-            } else {
-                const parts = message.split(',');
-                parts.forEach((part, i) => {
+                setTimeout(showNextMessage, 4000);
+            }
+            else if (Array.isArray(message)) {
+                let displayTime = 0;
+                message.forEach((part, i) => {
                     setTimeout(() => {
-                        content.innerHTML += part.trim() + (i < parts.length-1 ? ' ' : '');
-                    }, i * 850);
+                        content.innerHTML += part;
+                    }, displayTime);
+                    displayTime += 550;
                 });
-                
                 currentIndex++;
-                setTimeout(showNextMessage, parts.length * 600 + 2400);
+                setTimeout(showNextMessage, displayTime + 1800);
+            }
+            else {
+                content.innerHTML = message;
+                currentIndex++;
+                setTimeout(showNextMessage, 3000);
             }
         }
     </script>
