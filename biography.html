@@ -1,0 +1,312 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biography</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #e1e1e1;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .profile-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 184px;
+            height: 184px;
+            border-radius: 4px;
+            background: linear-gradient(45deg, #4b6cb7, #182848);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            color: white;
+            margin-right: 20px;
+            border: 2px solid #4b6cb7;
+            box-shadow: 0 0 15px rgba(75, 108, 183, 0.5);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(75, 108, 183, 0.7);
+        }
+
+        .profile-level {
+            display: inline-block;
+            background-color: #4b6cb7;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .profile-bio {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .detail-card {
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: 4px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            border-left: 3px solid #4b6cb7;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .detail-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4b6cb7;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .detail-content {
+            font-size: 14px;
+        }
+
+        .skills-list, .games-list {
+            list-style-type: none;
+        }
+
+        .skills-list li, .games-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skills-list li::before, .games-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #4b6cb7;
+        }
+
+        .game-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+
+        .game-badge:not(.dark-badge) {
+            background-color: #2a475e;
+        }
+
+        .dark-badge {
+            background-color: #1a1a2e;
+            color: #a0a0a0;
+            border: 1px solid #3a3a5a;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-bg" id="galaxy"></div>
+    
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-content">
+                <div class="avatar">J</div>
+                <div class="profile-info">
+                    <div class="profile-name">J_xtern</div>
+                    <div class="profile-level">Level 62</div>
+                    <div class="profile-bio">
+                        Professionally mental, somehow here
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-card">
+                <div class="detail-title">Skills & Expertise</div>
+                <div class="detail-content">
+                    <ul class="skills-list">
+                        <li>LUA Scripting</li>
+                        <li>Python Development</li>
+                        <li>Web Development</li>
+                        <li>Game Development</li>
+                        <li>Problem Solving</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">Favorite Games</div>
+                <div class="detail-content">
+                    <ul class="games-list">
+                        <li>Ready or Not</li>
+                        <li>Deep Rock Galactic</li>
+                        <li>Path of Exile</E></li>
+                        <li>ROBLOX (on occasion)</li>
+                        <li>Stardew Valley</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">Hobbies</div>
+                <div class="detail-content">
+                    <ul class="skills-list">
+                        <li>Firefighting</li>
+                        <li>Coding Projects</li>
+                        <li>Gaming</li>
+                        <li>Law Enforcement</li>
+                        <li>Social Interaction</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">Achievements</div>
+                <div class="detail-content">
+                    <div class="game-badge">Level 62 Coder</div>
+                    <div class="game-badge">Bug Slayer</div>
+                    <div class="game-badge">Necromancer</div>
+                    <div class="game-badge">Intern</div>
+                  <div class="game-badge">Firefighter</div>
+                  <div class="game-badge">Rescue</div>
+                    <div class="game-badge dark-badge">Depression</div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const galaxy = document.getElementById('galaxy');
+        const starCount = 200;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
+            
+            galaxy.appendChild(star);
+        }
+
+        const header = document.querySelector('.profile-header');
+        
+        header.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            header.style.background = `
+                linear-gradient(
+                    135deg, 
+                    rgba(15, 12, 41, 0.9) ${x * 20}%, 
+                    rgba(48, 43, 99, 0.9) ${y * 40 + 30}%, 
+                    rgba(36, 36, 62, 0.9)
+                )
+            `;
+        });
+    </script>
+</body>
+</html>
