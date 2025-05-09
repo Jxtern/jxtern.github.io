@@ -1,0 +1,421 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitsuo Mochizuki</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        :root {
+            --ps2-green: #00ff00;
+            --ps2-dark-green: #006600;
+            --ps2-light-green: #00cc00;
+            --ps2-bg: #0a0a0a;
+            --ps2-panel: #121212;
+        }
+        
+        body {
+            background-color: var(--ps2-bg);
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 80, 30, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(30, 80, 30, 0.1) 0%, transparent 20%);
+        }
+
+        .ps2-portfolio {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        /* PS2 Menu Bar */
+        .ps2-menu-bar {
+            background: linear-gradient(90deg, 
+                var(--ps2-dark-green) 0%, 
+                var(--ps2-light-green) 50%, 
+                var(--ps2-dark-green) 100%);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-radius: 5px 5px 0 0;
+            border: 2px solid #333;
+            border-bottom: none;
+        }
+
+        .ps2-menu-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: black;
+            text-shadow: 1px 1px 0 var(--ps2-green);
+            letter-spacing: 1px;
+        }
+
+        .ps2-main {
+            background-color: var(--ps2-panel);
+            border: 2px solid #333;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            padding: 20px;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--ps2-dark-green);
+            padding-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background-color: #222;
+            border: 4px solid var(--ps2-green);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 60px;
+            color: var(--ps2-green);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .profile-info h1 {
+            color: var(--ps2-green);
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .profile-highlight {
+            color: var(--ps2-light-green);
+            font-weight: bold;
+        }
+
+        .portfolio-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--ps2-green);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--ps2-dark-green);
+            letter-spacing: 1px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-card {
+            background: rgba(0, 50, 0, 0.2);
+            border: 1px solid var(--ps2-dark-green);
+            border-radius: 5px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            background: rgba(0, 80, 0, 0.3);
+            border-color: var(--ps2-green);
+            transform: translateY(-3px);
+        }
+
+        .skill-card h3 {
+            color: var(--ps2-light-green);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-icon {
+            margin-right: 10px;
+            color: var(--ps2-green);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            border-color: var(--ps2-green);
+        }
+
+        .project-image {
+            height: 180px;
+            background-color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ps2-green);
+            font-size: 40px;
+        }
+
+        .project-details {
+            padding: 15px;
+        }
+
+        .project-details h3 {
+            color: var(--ps2-light-green);
+            margin-top: 0;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .project-tag {
+            background: rgba(0, 80, 0, 0.3);
+            color: var(--ps2-light-green);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .ps2-button {
+            background: linear-gradient(180deg, #005500 0%, #003300 100%);
+            border: 2px solid var(--ps2-green);
+            color: var(--ps2-green);
+            padding: 8px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .ps2-button:hover {
+            background: linear-gradient(180deg, #007700 0%, #005500 100%);
+            text-shadow: 0 0 5px var(--ps2-green);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0) 50%, 
+                rgba(0, 20, 0, 0.1) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--ps2-green);
+            border-style: solid;
+            border-width: 0;
+        }
+
+        .corner-tl {
+            top: 0;
+            left: 0;
+            border-top-width: 3px;
+            border-left-width: 3px;
+        }
+
+        .corner-tr {
+            top: 0;
+            right: 0;
+            border-top-width: 3px;
+            border-right-width: 3px;
+        }
+
+        .corner-bl {
+            bottom: 0;
+            left: 0;
+            border-bottom-width: 3px;
+            border-left-width: 3px;
+        }
+
+        .corner-br {
+            bottom: 0;
+            right: 0;
+            border-bottom-width: 3px;
+            border-right-width: 3px;
+        }
+
+        .ps2-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--ps2-dark-green);
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .skills-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <div class="ps2-portfolio">
+        <div class="ps2-menu-bar">
+            <div class="ps2-menu-title">MITSUO MOCHIZUKI</div>
+        </div>
+        
+        <div class="ps2-main">
+            <div class="corner-decoration corner-tl"></div>
+            <div class="corner-decoration corner-tr"></div>
+            <div class="corner-decoration corner-bl"></div>
+            <div class="corner-decoration corner-br"></div>
+            
+            <div class="profile-header">
+                <div class="profile-avatar">M</div>
+                <div class="profile-info">
+                    <h1>MITSUO MOCHIZUKI</h1>
+                    <p><span class="profile-highlight">Italian GFX Designer & Artist</span></p>
+                    <p>Age: 18 | Born: 2007 | Languages: Japanese, Italian, English</p>
+                    <p>Favorites: Teriyaki 🍱 | Drawing ✏️ | Language Learning 🈵</p>
+                    <div style="margin-top: 10px;">
+                        <button class="ps2-button">Contact</button>
+                        <button class="ps2-button">View Works</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-section">
+                <h2 class="section-title">SKILLS & EXPERTISE</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3><span class="skill-icon">✏️</span> GFX Design</h3>
+                        <p>Creating stunning visual graphics with a unique style of Japanese culture.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3><span class="skill-icon">🎨</span> Digital Art</h3>
+                        <p>Expressive drawings and illustrations with both traditional and digital mediums.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3><span class="skill-icon">🈵</span> Japanese Language</h3>
+                        <p>Sort of fluent in japanese, can hold conversations in the japanese language.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3><span class="skill-icon">🌐</span> Multilingual</h3>
+                        <p>Italian native with professional English and conversational skills in other languages.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-section">
+                <h2 class="section-title">PERSONAL STATEMENT</h2>
+                <p>As an italian artist for deep appreaciation in the Japansee culture, I specialize in creating graphic designs that bridge between eastern and western cultures. My work is heavily influenced by my passion for learning languages.</p>
+                <p>When I'm not designing, you can find me practicing Japanese, sketching new ideas, or enjoying teriyaki, my favorite comfort food that reminds me of my cultural inspirations.</p>
+                <div style="margin-top: 20px;">
+                </div>
+            </div>
+        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.ps2-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
+                    audio.volume = 0.2;
+                    audio.play().catch(e => console.log("Audio play failed:", e));
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            });
+            
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const glow = document.createElement('div');
+                    glow.style.position = 'absolute';
+                    glow.style.width = '100%';
+                    glow.style.height = '100%';
+                    glow.style.background = 'radial-gradient(circle at center, rgba(0,255,0,0.1) 0%, transparent 70%)';
+                    glow.style.top = '0';
+                    glow.style.left = '0';
+                    glow.style.pointerEvents = 'none';
+                    glow.style.zIndex = '1';
+                    this.appendChild(glow);
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const glow = this.querySelector('div');
+                    if (glow) this.removeChild(glow);
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            setTimeout(() => {
+                const menuBar = document.querySelector('.ps2-menu-bar');
+                menuBar.style.animation = 'none';
+                setTimeout(() => {
+                    menuBar.style.animation = 'ps2Boot 0.5s';
+                }, 10);
+            }, 300);
+        });
+    </script>
+</body>
+</html>
