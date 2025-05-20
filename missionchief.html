@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MissionChief</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        missionblue: '#0056b3',
+                    },
+                    boxShadow: {
+                        'hard': '0 4px 12px rgba(0, 0, 0, 0.08)',
+                        'hard-lg': '0 8px 24px rgba(0, 0, 0, 0.12)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        .feature-icon {
+            background: linear-gradient(135deg, #e6f0ff 0%, #d0e1ff 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full">
+        <div class="bg-white rounded-xl shadow-hard-lg overflow-hidden border border-gray-100">
+            <div class="px-10 pt-10 pb-6 border-b border-gray-100">
+                <div class="flex justify-center mb-1">
+                    <img src="https://www.missionchief.com/images/logo-header.png" alt="MissionChief" class="h-12">
+                </div>
+                <p class="text-center text-gray-500 font-medium">missionchief.com</p>
+            </div>
+            
+            <div class="px-10 py-8">
+                <div class="grid md:grid-cols-2 gap-5 mb-10">
+                    <a href="https://www.missionchief.com/?ruid=1102002" target="_blank" 
+                       class="btn bg-missionblue hover:bg-blue-700 text-white font-semibold py-3.5 px-6 rounded-lg shadow-hard flex items-center justify-center space-x-2">
+                        <i class="fas fa-play text-sm"></i>
+                        <span>Start Playing</span>
+                    </a>
+                    
+                    <a href="https://www.missionchief.com/alliances/12187" target="_blank" 
+                       class="btn bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3.5 px-6 rounded-lg shadow-hard flex items-center justify-center space-x-2">
+                        <i class="fas fa-users text-sm"></i>
+                        <span>Join Our Alliance</span>
+                    </a>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-truck-medical text-missionblue text-lg"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Semi-Realistic Dispatch</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Coordinate police, fire, and EMS units in dynamic emergency scenarios</p>
+                    </div>
+                    
+                    <div class="p-5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-globe-americas text-missionblue text-lg"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Global Community</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Join thousands of players in strategic alliances worldwide</p>
+                    </div>
+                    
+                    <div class="p-5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-chart-line text-missionblue text-lg"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Strategic Growth</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Build and expand your emergency services empire</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-10 py-4 bg-gray-50 border-t border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-xs text-gray-500 mb-2 md:mb-0">
+                        <i class="fas fa-external-link-alt mr-1"></i> Opens in new window
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        MissionChief - Browser-based dispatch game
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
