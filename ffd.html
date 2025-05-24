@@ -1,0 +1,825 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freiwillige Feuerwehr Wiesbaden-Dotzheim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E30613;  /* Feuerwehr Rot */
+            --primary-dark: #B0050F;
+            --secondary: #2C2C2C;
+            --light: #F8F8F8;
+            --dark: #1A1A1A;
+            --accent: #FFD100;
+            --text: #333333;
+            --text-light: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 3.5rem; }
+        h2 { font-size: 2.8rem; }
+        h3 { font-size: 2rem; }
+        h4 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(227, 6, 19, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(227, 6, 19, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--primary);
+            margin: 1.5rem auto;
+            border-radius: 5px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled {
+            background: rgba(26, 26, 26, 0.98);
+            padding: 0.5rem 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            height: 60px;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .logo {
+            height: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1582732970804-34c1ba2d3b0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .departments {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .department {
+            margin: 0 1rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .department:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        #wir {
+            background: white;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Jugendfeuerwehr Section */
+        #jugendfeuerwehr {
+            background-color: #f9f9f9;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border-bottom: 4px solid transparent;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-bottom-color: var(--primary);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Förderverein Section */
+        .verein-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .verein-highlight {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Contact Section */
+        #kontakt {
+            background-color: #f9f9f9;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            height: 70px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.4rem; }
+            
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                padding: 2rem 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .hero {
+                min-height: 700px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .department {
+                margin: 0.5rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .departments {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .department {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+                margin: 0.3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#">
+                <img src="http://www.feuerwehr-wiesbaden-dotzheim.de/svg/logo.svg" alt="Feuerwehr Dotzheim Logo" class="logo">
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#wir">#Wir</a></li>
+                <li><a href="#jugendfeuerwehr">#Jugendfeuerwehr</a></li>
+                <li><a href="#foerderverein">#Förderverein</a></li>
+                <li><a href="#kontakt">#Kontakt</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Freiwillige Feuerwehr<br>Wiesbaden-Dotzheim</h1>
+            <p>Gemeinsam für die Sicherheit unserer Stadt</p>
+            <a href="#kontakt" class="btn">Mitglied werden</a>
+            
+            <div class="departments">
+                <div class="department">Einsatzabteilung</div>
+                <div class="department">Jugendfeuerwehr</div>
+                <div class="department">Förderverein</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="wir" class="section">
+        <div class="container">
+            <h2 class="section-title animate">#Wir Für Wiesbaden</h2>
+            <div class="about-content animate">
+                <p>Mit unseren 3 Einsatzfahrzeugen sorgen wir 24/7, zusammen mit der Berufsfeuerwehr, den 19 weiteren Freiwilligen Feuerwehren in Wiesbaden, sowie allen anderen, an der aktiven Gefahrenabwehr beteiligen Hilfsorganisationen für Sicherheit der Wiesbadener Bürger.</p>
+                <p>Die Feuerwehr Dotzheim besteht aus der Einsatzabteilung, der Jugendfeuerwehr, dem Förderverein sowie der Ehren- und Alterabteilung.</p>
+                <p>Wir freuen uns immer über neu, interessierte Mitglieder - egal für welche Abteilung. Nimm gerne Kontakt mit uns auf:</p>
+                <a href="#kontakt" class="btn btn-outline">Kontakt aufnehmen</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jugendfeuerwehr Section -->
+    <section id="jugendfeuerwehr" class="section">
+        <div class="container">
+            <h2 class="section-title animate">#JUGENDFEUERWEHR<br><span style="font-size: 1.8rem;">Ein starkes Team</span></h2>
+            
+            <div class="animate">
+                <p class="text-center"><strong>Hast du Lust auf Action und Spaß?</strong><br>
+                Du bist an Technik und Fortschritt interessiert?<br>
+                Du bist bereit, dich für andere ein zusetzten?<br>
+                Du möchtest Feuerwehrfrau / Feuerwehrmann werden?</p>
+                
+                <p class="text-center" style="margin: 2rem 0;"><strong style="font-size: 1.3rem;">…DANN BIST DU BEI DER JUGENDFEUERWEHR GENAU RICHTIG!</strong></p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card animate">
+                    <div class="benefit-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Wir bieten…</h3>
+                    <p>- Wettkämpfe gegen und mit anderen Jugendfeuerwehren<br>
+                    - Ausbildung zur Feuerwehrfrau und Feuerwehrmann<br>
+                    - Erleben von Gemeinschaftsgefühl bei gemeinsamen Übungen, 24 Stundenübungen, Freizeitfahrten u.v.m.</p>
+                </div>
+                
+                <div class="benefit-card animate" style="transition-delay: 0.2s;">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Übungszeiten</h3>
+                    <p>Übungsdienst der Jugendfeuerwehr Dotzheim jeden Freitag um 17 Uhr im Feuerwehr Gerätehaus (außerhalb der Ferien)</p>
+                </div>
+                
+                <div class="benefit-card animate" style="transition-delay: 0.4s;">
+                    <div class="benefit-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Unsere Geschichte</h3>
+                    <p>Unsere Jugendfeuerwehr besteht seit 1977, die Einsatzabteilung besteht zu ¾ aus ehemaligen Jugendfeuerwehrkameraden, die bei uns groß geworden sind.</p>
+                    <a href="#kontakt" class="btn btn-outline" style="margin-top: 1rem;">Kontakt aufnehmen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Förderverein Section -->
+    <section id="foerderverein" class="section">
+        <div class="container">
+            <h2 class="section-title animate">#Förderverein<br><span style="font-size: 1.8rem;">Einer für Alle</span></h2>
+            
+            <div class="verein-content">
+                <div class="animate">
+                    <p>Die Freiwillige Feuerwehr in Wiesbaden Dotzheim ist eine städtische Einrichtung. Unterhalten und ausgestattet von der Stadt Wiesbaden, die dazu durch das Hessische Gesetz für den Brandschutz, den Katastrophenschutz und die allgemeine Hilfe (HBKG) verpflichtet ist.</p>
+                    <p>Im Gegensatz zu anderen städtischen Einrichtungen arbeitet die Freiwillige Feuerwehr Dotzheim jedoch mit ehrenamtlichen Kräften. Um diese Arbeit noch besser und effizienter zu gestalten, haben sich die ehrenamtlichen Einsatzkräfte zu einem Verein zusammengeschlossen. Dieser Verein tritt überall da ein, wo der gesetzliche Auftrag endet.</p>
+                </div>
+                
+                <div class="verein-highlight animate" style="transition-delay: 0.2s;">
+                    <p>Der Verein sammelt Förder- und Spendengelder und finanziert so Dinge, die nicht durch die Stadt Wiesbaden als Träger der Feuerwehr finanziert werden. Beispielsweise spezielle Ausrüstungsgegenstände. Aber auch Maßnahmen, um den Zusammenhalt in der Feuerwehr zu stärken oder die Kameradschaft untereinander zu pflegen.</p>
+                </div>
+                
+                <div class="animate" style="transition-delay: 0.4s;">
+                    <p>Auch Sie können den Verein zur Förderung der Freiwillige Feuerwehr Wiesbaden-Dotzheim e.V. als Mitglied unterstützen. Vereinsmitglieder müssen natürlich nicht zwingend Mitglieder der Einsatzabteilung (aktive Mannschaft) sein.</p>
+                    
+                    <h3>Der Vorstand des Vereins</h3>
+                    <p>Der Feuerwehrverein wird von einem gewählten Vorstand geführt. Der Vorstand organisiert alle Maßnahmen des Vereins zur Erreichung des Vereinszwecks auf Grundlage der Vereinssatzung: der Förderung des Feuerwesens in Dotzheim.</p>
+                    <p>Dazu werden Veranstaltungen zur Öffentlichkeitsarbeit organisiert und Förder- und Spendengelder gesammelt. Auch die Durchführung des Adventsmarktes gehört beispielsweise dazu.</p>
+                    <p>Der Vorstand setzt sich aus dem Vorsitzenden, dem stellvertretenden Vorsitzenden, dem Kassierer, dem Schriftführer sowie dessen Stellvertretern und bis zu drei Beisitzern zusammen.</p>
+                    
+                    <div class="text-center" style="margin-top: 2rem;">
+                        <a href="#kontakt" class="btn btn-outline">Kontakt aufnehmen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontakt" class="section">
+        <div class="container">
+            <h2 class="section-title animate">#Kontakt</h2>
+            
+            <div class="animate">
+                <p class="text-center">Hast du Interesse an der Freiwillige Feuerwehr oder benötigst du mehr informationen?</p>
+                <p class="text-center">Dann kontaktiere uns gerne jederzeit! Die richtigen Ansprechpartner findest du hier.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card animate">
+                    <div class="contact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Wehrführung</h3>
+                    <h4>Ansprechpartner</h4>
+                    <p>Maximilian Sommer<br>Markus Klebsattel<br>Henning von Hüllesheim<br>Christian Dingeldein</p>
+                    <h4>Kontakt</h4>
+                    <p><a href="mailto:wehrfuehrung@ff-dotzheim.de"><i class="fas fa-envelope"></i> wehrfuehrung@ff-dotzheim.de</a></p>
+                </div>
+                
+                <div class="contact-card animate" style="transition-delay: 0.2s;">
+                    <div class="contact-icon">
+                        <i class="fas fa-fire-extinguisher"></i>
+                    </div>
+                    <h3>Jugendfeuerwehr</h3>
+                    <h4>Ansprechpartner</h4>
+                    <p>Gregor Golüke</p>
+                    <h4>Kontakt</h4>
+                    <p><a href="mailto:jf@ff-dotzheim.de"><i class="fas fa-envelope"></i> jf@ff-dotzheim.de</a></p>
+                </div>
+                
+                <div class="contact-card animate" style="transition-delay: 0.4s;">
+                    <div class="contact-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Förderverein</h3>
+                    <h4>Ansprechpartner</h4>
+                    <p>Alexander Behrens (1. Vorsitzender)</p>
+                    <h4>Kontakt</h4>
+                    <p><a href="mailto:verein@ff-dotzheim.de"><i class="fas fa-envelope"></i> verein@ff-dotzheim.de</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <img src="http://www.feuerwehr-wiesbaden-dotzheim.de/svg/logo.svg" alt="Feuerwehr Dotzheim Logo" class="footer-logo">
+                    <p>Die Freiwillige Feuerwehr Wiesbaden-Dotzheim steht rund um die Uhr für die Sicherheit der Bürgerinnen und Bürger bereit.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#wir">#Wir Für Wiesbaden</a></li>
+                        <li><a href="#jugendfeuerwehr">#Jugendfeuerwehr</a></li>
+                        <li><a href="#foerderverein">#Förderverein</a></li>
+                        <li><a href="#kontakt">#Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Informationen</h4>
+                    <ul>
+                        <li><a href="#">Mitglied werden</a></li>
+                        <li><a href="#">Förderverein</a></li>
+                        <li><a href="#">Einsatzabteilung</a></li>
+                        <li><a href="#">Termine</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Feuerwehrhaus Dotzheim</li>
+                        <li><i class="fas fa-phone"></i> Notruf: 112</li>
+                        <li><i class="fas fa-envelope"></i> info@ff-dotzheim.de</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Freiwillige Feuerwehr Wiesbaden-Dotzheim. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll animations
+        const animateElements = document.querySelectorAll('.animate');
+        
+        const animateOnScroll = () => {
+            animateElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('animated');
+                }
+            });
+        };
+        
+        // Initial check
+        animateOnScroll();
+        
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
