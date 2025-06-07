@@ -1,0 +1,159 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for lissy</title>
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #212529;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .message-container {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .title-box {
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="none" stroke="white" stroke-width="2"/></svg>') 2;
+            border-style: solid;
+            border-width: 4px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            background-color: #212529;
+        }
+        
+        h1 {
+            color: #fff;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .heart-container {
+            position: relative;
+            height: 60px;
+            margin: 1.5rem 0;
+        }
+        
+        .pixel-heart {
+            font-size: 3rem;
+            color: #e83f3f;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulse 0.8s infinite alternate;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.2); }
+        }
+        
+        .name-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: #e83f3f;
+            color: white;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 4px 4px 0 #000;
+            position: relative;
+        }
+        
+        .reveal-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #000;
+        }
+        
+        .reveal-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #000;
+        }
+        
+        .reasons-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            text-align: left;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        
+        .reasons-box.show {
+            max-height: 500px;
+        }
+        
+        .nes-list li {
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .name-badge {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <div class="title-box">
+            <h1>I'M PROUD OF YOU</h1>
+            <div class="heart-container">
+                <div class="pixel-heart">♥</div>
+            </div>
+            <div class="name-badge nes-text is-primary">LISSY</div>
+        </div>
+        
+        <button class="reveal-btn nes-btn is-success" onclick="toggleReasons()">Tell Me More</button>
+        
+        <div class="reasons-box" id="reasonsBox">
+            <ul class="nes-list is-disc">
+                <li>your dedication inspires me</li>
+                <li>you make me happy</li>
+                <li>your kindness changes lives</li>
+                <li>you are stronger than you know</li>
+                <li>i believe in you and everything that you do, makes me happy</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleReasons() {
+            const box = document.getElementById('reasonsBox');
+            box.classList.toggle('show');
+            
+            const btn = document.querySelector('.reveal-btn');
+            if (box.classList.contains('show')) {
+                btn.textContent = 'Hide Reasons';
+                btn.classList.remove('is-success');
+                btn.classList.add('is-warning');
+            } else {
+                btn.textContent = 'Tell Me More';
+                btn.classList.remove('is-warning');
+                btn.classList.add('is-success');
+            }
+        }
+    </script>
+</body>
+</html>
