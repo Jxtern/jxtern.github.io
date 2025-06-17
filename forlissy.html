@@ -2,157 +2,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>for lissy</title>
-    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <title>Message for You</title>
     <style>
         body {
-            background-color: #212529;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: black;
             margin: 0;
-            padding: 20px;
-            font-family: 'Press Start 2P', cursive;
-        }
-        
-        .message-container {
-            text-align: center;
-            max-width: 600px;
-        }
-        
-        .title-box {
-            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="12" height="12" fill="none" stroke="white" stroke-width="2"/></svg>') 2;
-            border-style: solid;
-            border-width: 4px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            background-color: #212529;
-        }
-        
-        h1 {
-            color: #fff;
-            text-shadow: 3px 3px 0 #000;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-        
-        .heart-container {
-            position: relative;
-            height: 60px;
-            margin: 1.5rem 0;
-        }
-        
-        .pixel-heart {
-            font-size: 3rem;
-            color: #e83f3f;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: pulse 0.8s infinite alternate;
-            text-shadow: 2px 2px 0 #000;
-        }
-        
-        @keyframes pulse {
-            0% { transform: translateX(-50%) scale(1); }
-            100% { transform: translateX(-50%) scale(1.2); }
-        }
-        
-        .name-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background-color: #e83f3f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             color: white;
-            font-size: 1.5rem;
-            margin: 1rem 0;
-            box-shadow: 4px 4px 0 #000;
-            position: relative;
-        }
-        
-        .reveal-btn {
-            position: relative;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
             overflow: hidden;
+        }
+
+        #content {
+            font-size: 1.8em;
+            padding: 20px;
+            max-width: 800px;
+            min-height: 200px;
+            line-height: 1.6;
+        }
+
+        #startBtn {
+            font-size: 1.5em;
+            padding: 12px 25px;
+            margin: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
             transition: all 0.3s;
         }
-        
-        .reveal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #000;
+
+        #startBtn:hover {
+            background-color: #444;
+            transform: scale(1.05);
         }
-        
-        .reveal-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #000;
+
+        .highlight {
+            color: #ff6b6b;
+            transition: color 1s;
         }
-        
-        .reasons-box {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            text-align: left;
-            margin: 0 auto;
-            width: fit-content;
+
+        #youtube-player {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
         }
-        
-        .reasons-box.show {
-            max-height: 500px;
-        }
-        
-        .nes-list li {
-            margin-bottom: 0.5rem;
-            color: #fff;
-            text-shadow: 1px 1px 0 #000;
-        }
-        
-        @media (max-width: 500px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            .name-badge {
-                font-size: 1.2rem;
+
+        @media (max-width: 768px) {
+            #content {
+                font-size: 1.4em;
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="message-container">
-        <div class="title-box">
-            <h1>I'M PROUD OF YOU</h1>
-            <div class="heart-container">
-                <div class="pixel-heart">♥</div>
-            </div>
-            <div class="name-badge nes-text is-primary">LISSY</div>
-        </div>
-        
-        <button class="reveal-btn nes-btn is-success" onclick="toggleReasons()">Tell Me More</button>
-        
-        <div class="reasons-box" id="reasonsBox">
-            <ul class="nes-list is-disc">
-                <li>your dedication inspires me</li>
-                <li>you make me happy</li>
-                <li>your kindness changes lives</li>
-                <li>you are stronger than you know</li>
-                <li>i believe in you and everything that you do, makes me happy</li>
-            </ul>
-        </div>
-    </div>
+    <button id="startBtn">Begin</button>
+    <div id="content"></div>
+    
+    <iframe id="youtube-player" src="https://www.youtube.com/embed/IF3_j3GeuLY?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <script>
-        function toggleReasons() {
-            const box = document.getElementById('reasonsBox');
-            box.classList.toggle('show');
+        const messages = [
+            ["Hey there,", "you know who."],
+            ["I'm sorry for everything I have done,", "and how much I regret it."],
+            ["I wish I could go back,", "just turn back time,", "to when things were still okay between us."],
+            ["I miss the way it used to feel,", "the peace,", "the warmth,", "the way your voice softened everything heavy in me."],
+            ["If I could undo the way I treated you,", "I would.", "A thousand times over."],
+            ["You didn't deserve the pain,", "and I see that now,", "more clearly than ever."],
+            ["I dream sometimes-", "of just lying beside you in a giant field of flowers.", "Endless colors,", "soft breeze,", "no weight on our shoulders,", "Just us laying next to each other"],
+            ["No worries,", "no fear,", "no sadness.", "Just us."],
+            ["That dream used to feel far away.", "Now, wherever I go,", "maybe I'll finally find that field."],
+            ["Maybe I'll get to rest in it.", "Maybe I'll finally feel peace."],
+            ["But I'd trade all of it,", "just to feel your hand in mine again,", "even for one more minute."],
+            ["I'm sorry.", "Truly.", "And I hope you know-", "you were everything."]
+        ];
+
+        let currentMessage = 0;
+        const content = document.getElementById('content');
+        let player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+        }
+
+        function onPlayerStateChange(event) {
+        }
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            player.playVideo();
+            player.setVolume(50);
             
-            const btn = document.querySelector('.reveal-btn');
-            if (box.classList.contains('show')) {
-                btn.textContent = 'Hide Reasons';
-                btn.classList.remove('is-success');
-                btn.classList.add('is-warning');
-            } else {
-                btn.textContent = 'Tell Me More';
-                btn.classList.remove('is-warning');
-                btn.classList.add('is-success');
+            document.getElementById('startBtn').style.display = 'none';
+            
+            showNextMessage();
+        });
+
+        function showNextMessage() {
+            if (currentMessage >= messages.length) {
+                return;
             }
+
+            content.innerHTML = '';
+            const messageParts = messages[currentMessage];
+            let displayTime = 0;
+
+            messageParts.forEach((part, index) => {
+                setTimeout(() => {
+                    content.innerHTML += part + '<br>';
+                    
+                    content.scrollTop = content.scrollHeight;
+                    
+                }, displayTime);
+                
+                const wordCount = part.split(' ').length;
+                displayTime += 900 + (wordCount * 100);
+            });
+
+            currentMessage++;
+            
+            setTimeout(showNextMessage, displayTime + 2000);
         }
     </script>
 </body>
