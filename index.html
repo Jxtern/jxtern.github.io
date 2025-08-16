@@ -1,216 +1,125 @@
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frontpage Glitch</title>
-    <style>
-        body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .glitch-container {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .glitch-text {
-            color: #0f0;
-            font-size: 8rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px #0f0;
-            position: relative;
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-        }
-        
-        .glitch-text::before,
-        .glitch-text::after {
-            content: "J_X";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .glitch-text::before {
-            color: #f0f;
-            z-index: -1;
-            animation: glitch-anim-2 3s infinite linear alternate-reverse, glitch-opacity 0.3s infinite;
-            text-shadow: 3px 0 5px #f0f;
-        }
-        
-        .glitch-text::after {
-            color: #0ff;
-            z-index: -2;
-            animation: glitch-anim-3 2.5s infinite linear alternate-reverse, glitch-opacity 0.5s infinite;
-            text-shadow: -3px 0 5px #0ff;
-        }
-        
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); }
-            60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); }
-            100% { transform: translate(0); }
-        }
-        
-        @keyframes glitch-anim-2 {
-            0% { transform: translate(0); }
-            20% { transform: translate(5px, 0); }
-            40% { transform: translate(-5px, 5px); }
-            60% { transform: translate(0, -5px); }
-            80% { transform: translate(5px, 5px); }
-            100% { transform: translate(0); }
-        }
-        
-        @keyframes glitch-anim-3 {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 0); }
-            40% { transform: translate(5px, -5px); }
-            60% { transform: translate(0, 5px); }
-            80% { transform: translate(-5px, -5px); }
-            100% { transform: translate(0); }
-        }
-        
-        @keyframes glitch-opacity {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 0.3; }
-        }
-        
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                rgba(0, 255, 0, 0.03) 0%,
-                rgba(0, 255, 0, 0.08) 50%,
-                rgba(0, 255, 0, 0.03) 100%
-            );
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 10;
-            animation: scanline-anim 0.5s linear infinite;
-        }
-        
-        @keyframes scanline-anim {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-4px); }
-        }
-        
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVGhD7cExAQAwDMCg+zfd2VAp5JGBHZkzMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL6BzKQA8mT4g2eAAAAAElFTkSuQmCC');
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: 5;
-        }
-        
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .music-player:hover {
-            opacity: 1;
-        }
-        
-        .music-toggle {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
-            color: #0f0;
-            border: 1px solid #0f0;
-            padding: 10px 15px;
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .music-toggle:hover {
-            background: rgba(0, 255, 0, 0.2);
-            text-shadow: 0 0 5px #0f0;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>who i am</title>
+  <style>
+    :root{
+      --bg:#040406;
+      --accent:#7afcff;
+      --accent-dim:#4fb2b2;
+      --text:#e6eef0;
+    }
+    html,body{
+      height:100%;background:var(--bg);margin:0;
+      font-family:"Courier New", monospace;
+      display:flex;justify-content:center;align-items:center;
+      overflow:hidden;
+    }
+    .title{
+      font-style:italic;font-size:64px;letter-spacing:1px;color:var(--text);
+      position:relative;display:inline-block;
+    }
+    .layer{
+      position:absolute;left:0;top:0;pointer-events:none;opacity:0.8;
+    }
+    @keyframes glitchA{
+      0%{transform:translate(0,0)}
+      20%{transform:translate(-4px,-2px)}
+      40%{transform:translate(3px,2px)}
+      60%{transform:translate(-2px,1px)}
+      80%{transform:translate(2px,-1px)}
+      100%{transform:translate(0,0)}
+    }
+    @keyframes glitchB{
+      0%{transform:translate(0,0)}
+      20%{transform:translate(4px,1px)}
+      40%{transform:translate(-3px,-1px)}
+      60%{transform:translate(1px,2px)}
+      80%{transform:translate(-1px,-2px)}
+      100%{transform:translate(0,0)}
+    }
+    .glitch-on .cyan{color:var(--accent);animation:glitchA 0.25s steps(2,end);}
+    .glitch-on .mag{color:var(--accent-dim);animation:glitchB 0.25s steps(2,end);}
+    #startBtn{
+      position:absolute;top:20px;right:20px;background:transparent;
+      border:1px solid rgba(255,255,255,0.2);color:var(--text);
+      padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;
+    }
+    #github{
+      position:absolute;bottom:20px;right:20px;
+    }
+    #github img{
+      width:32px;height:32px;filter:invert(1);transition:transform 0.2s;
+    }
+    #github img:hover{
+      transform:scale(1.1);
+    }
+  </style>
 </head>
 <body>
-    <div class="noise"></div>
-    <div class="scanlines"></div>
-    <div class="glitch-container">
-        <div class="glitch-text" id="glitchText">J_X</div>
-    </div>
-    
-    <button class="music-toggle" id="musicToggle">TOGGLE MUSIC</button>
-    <div class="music-player" id="musicPlayer">
-        <iframe width="300" height="80" src="https://www.youtube.com/embed/QqeTfbBhBno?autoplay=1&loop=1&controls=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+  <button id="startBtn">Start audio</button>
+  <h1 class="title" id="title">
+    <span class="base">J_X</span>
+    <span class="layer cyan">J_X</span>
+    <span class="layer mag">J_X</span>
+  </h1>
+  <a id="github" href="https://github.com/Jxtern" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" />
+  </a>
+  <div id="player" style="position:absolute;left:-9999px;width:1px;height:1px"></div>
 
-    <script>
-        const glitchText = document.getElementById('glitchText');
-        const musicToggle = document.getElementById('musicToggle');
-        const musicPlayer = document.getElementById('musicPlayer');
-        let musicPlaying = true;
-        
-        function randomDistort() {
-            const distortions = [
-                'J\\X', 'J|X', 'J/X', 'J_X', 'J_X', 'J_X', 'J~X', 'J¿X', 'J¡X'
-            ];
-            
-            const randomDistortion = distortions[Math.floor(Math.random() * distortions.length)];
-            glitchText.textContent = randomDistortion;
-            
-            setTimeout(() => {
-                glitchText.textContent = 'J_X';
-            }, Math.random() * 300);
-        }
-        
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                randomDistort();
-            }
-        }, 100);
-        
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
 
-        setInterval(() => {
-            if (Math.random() > 0.9) {
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(randomDistort, i * 100);
-                }
-            }
-        }, 3000);
-        
-        musicToggle.addEventListener('click', () => {
-            musicPlaying = !musicPlaying;
-            const iframe = musicPlayer.querySelector('iframe');
-            if (musicPlaying) {
-                iframe.src = iframe.src.replace('&mute=1', '') + '&autoplay=1';
-                musicToggle.textContent = 'MUTE MUSIC';
-            } else {
-                iframe.src = iframe.src.replace('&autoplay=1', '') + '&mute=1';
-                musicToggle.textContent = 'PLAY MUSIC';
-            }
-        });
-        
-        musicToggle.textContent = 'MUTE MUSIC';
-    </script>
+    var player;
+    var videoId = 'Bz-Q69sksdE';
+    function onYouTubeIframeAPIReady(){
+      player = new YT.Player('player', {
+        height: '1', width: '1',
+        videoId: videoId,
+        playerVars: { autoplay: 1, controls: 0, loop: 1, playlist: videoId, modestbranding: 1 },
+        events: { 'onReady': onPlayerReady }
+      });
+    }
+    function onPlayerReady(){
+      player.setVolume(25);
+      player.playVideo();
+    }
+
+    document.getElementById('startBtn').addEventListener('click', function(){
+      if (!player) return;
+      player.playVideo();
+      player.setVolume(25);
+    });
+
+    var title = document.getElementById('title');
+    function triggerGlitch(){
+      title.classList.add('glitch-on');
+      setTimeout(()=> title.classList.remove('glitch-on'), 250);
+    }
+
+    function switchText(){
+      var base = title.querySelector('.base');
+      var cyan = title.querySelector('.cyan');
+      var mag = title.querySelector('.mag');
+      if(Math.random() < 0.2){
+        base.textContent = cyan.textContent = mag.textContent = 'J_XTERN';
+      } else {
+        base.textContent = cyan.textContent = mag.textContent = 'J_X';
+      }
+    }
+
+    (function loop(){
+      triggerGlitch();
+      if(Math.random() < 0.3){
+        switchText();
+      }
+      setTimeout(loop, 800 + Math.random()*1200);
+    })();
+  </script>
 </body>
 </html>
