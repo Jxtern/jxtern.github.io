@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bittersweet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b0b12;
+      --plum: #3b1e3f;
+      --rose: #e7b5c2;
+      --peach: #ffd1b3;
+      --violet: #7a5fe1;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: radial-gradient(80vmax 80vmax at 70% 30%, rgba(58,32,72,.55), transparent 60%),
+                  radial-gradient(70vmax 70vmax at 20% 80%, rgba(30,79,95,.45), transparent 60%),
+                  radial-gradient(60vmax 60vmax at 110% -10%, rgba(122,95,225,.25), transparent 60%),
+                  var(--ink);
+      color: #f5f6fa;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+      overflow: hidden;
+    }
+    .grain::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.07"/></svg>');
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+    .wrap {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      padding: 3rem 1.5rem;
+    }
+    .card {
+      width: min(38ch, 92vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 0 60px rgba(255,255,255,0.03);
+      padding: 1.25rem 1.1rem 1.1rem;
+      backdrop-filter: blur(6px) saturate(120%);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: "";
+      position: absolute; inset: -40% -40% auto auto;
+      width: 160%; height: 160%;
+      background: radial-gradient(40rem 30rem at 60% 0%, rgba(231,181,194,0.10), transparent 70%);
+      pointer-events: none;
+    }
+    .heading {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin: 0 0 .35rem 0;
+    }
+    .note {
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: #f6f1f4;
+    }
+    .note em { color: var(--peach); font-style: normal; }
+    .glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(18rem 10rem at -5% 105%, rgba(255,209,179,0.12), transparent 60%),
+                  radial-gradient(14rem 12rem at 108% -2%, rgba(122,95,225,0.12), transparent 60%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .tiny {
+      margin-top: .85rem;
+      font-size: .8rem;
+      letter-spacing: .03em;
+      color: rgba(255,255,255,0.55);
+    }
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; opacity: .35;
+    }
+    .stars span {
+      position: absolute; width: 1px; height: 1px; background: #fff; border-radius: 50%;
+      animation: twinkle linear infinite;
+    }
+    @keyframes twinkle { to { transform: translateY(-3px); opacity: .5; } }
+  </style>
+</head>
+<body class="grain">
+  <div class="wrap">
+    <article class="card">
+      <div class="glow" aria-hidden="true"></div>
+      <h2 class="heading">a little note</h2>
+      <p class="note">
+        music is the only way I can truly show how I feel about you. I know it's hard, it's hard for me too, but I'm still here, finding our melody 😋😋😋 <em>thank you for everything.</em>
+      </p>
+      <div class="tiny">— a message from hopefully your favourite person</div>
+    </article>
+  </div>
+
+  <div style="position: fixed; left: -9999px; top: -9999px; width:1px; height:1px; opacity:0; pointer-events:none;">
+    <div id="yt-sound"></div>
+  </div>
+
+  <script>
+    (function addStars(n){
+      const layer = document.createElement('div');
+      layer.className = 'stars';
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('span');
+        s.style.left = Math.random()*100 + 'vw';
+        s.style.top = Math.random()*100 + 'vh';
+        s.style.opacity = (0.4 + Math.random()*0.6).toFixed(2);
+        s.style.animationDuration = (5 + Math.random()*7).toFixed(2) + 's';
+        layer.appendChild(s);
+      }
+      document.body.appendChild(layer);
+    })(70);
+
+    const YT_ID = '09H7aKQBSbw';
+    let ytPlayer, triedUnmute = false;
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-sound', {
+        videoId: YT_ID,
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          playlist: YT_ID,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          fs: 0,
+          playsinline: 1,
+          mute: 1
+        },
+        events: {
+          onReady: (e) => {
+            try { e.target.mute(); } catch(_) {}
+            e.target.playVideo();
+          },
+          onStateChange: (e) => {
+            // Keep it looping
+            if (e.data === YT.PlayerState.ENDED) {
+              e.target.seekTo(0);
+              e.target.playVideo();
+            }
+          }
+        }
+      });
+    }
+
+    (function(){
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    })();
+
+    function enableSoundOnce() {
+      if (!ytPlayer || triedUnmute) return;
+      triedUnmute = true;
+      try {
+        ytPlayer.unMute();
+        ytPlayer.setVolume(44);
+      } catch(_) {}
+      ['click','touchstart','keydown','pointerdown'].forEach(t => document.removeEventListener(t, enableSoundOnce, {passive:true}));
+    }
+    ['click','touchstart','keydown','pointerdown'].forEach(t => document.addEventListener(t, enableSoundOnce, {passive:true, once:false}));
+  </script>
+
+
+  <noscript>
+    <iframe width="1" height="1" style="opacity:0; pointer-events:none;" allow="autoplay" title="hidden sound"
+      src="https://www.youtube.com/embed/09H7aKQBSbw?autoplay=1&loop=1&playlist=09H7aKQBSbw&controls=0&modestbranding=1&rel=0&mute=1">
+    </iframe>
+  </noscript>
+</body>
+</html>
