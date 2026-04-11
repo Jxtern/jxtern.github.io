@@ -1,0 +1,220 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFN Suggestions</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstra.386-cdn@1.0.0/css/bootstra.386.min.css">
+  
+  <style>
+    body {
+      background: #008080;
+      font-family: 'Courier New', monospace;
+      padding: 20px 10px;
+    }
+
+    .window {
+      max-width: 620px;
+      margin: 0 auto;
+      border: 3px solid #dfdfdf;
+      box-shadow: 4px 4px 0 #000;
+      background: #c0c0c0;
+    }
+
+    .title-bar {
+      background: linear-gradient(to right, #000080, #1084d0);
+      color: white;
+      padding: 6px 12px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.15rem;
+      border-bottom: 2px solid #fff;
+    }
+
+    .window-body {
+      padding: 20px;
+      background: #c0c0c0;
+    }
+
+    .game-tabs {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #808080;
+    }
+
+    .game-tab {
+      padding: 10px 20px;
+      background: #c0c0c0;
+      border: 2px solid #fff;
+      border-bottom: none;
+      border-right-color: #808080;
+      border-left-color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      box-shadow: 2px 2px 0 #808080 inset;
+    }
+
+    .game-tab.active {
+      background: #ffffff;
+      border-color: #fff #808080 #fff #fff;
+      box-shadow: none;
+      position: relative;
+      z-index: 2;
+      border-bottom: 2px solid #ffffff;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .form-control {
+      border: 2px inset #fff;
+      background: #fff;
+      font-family: 'Courier New', monospace;
+      padding: 9px;
+      font-size: 15px;
+    }
+
+    textarea.form-control {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .btn-send {
+      background: #008000;
+      color: white;
+      border: 2px solid #000;
+      padding: 14px;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 3px 3px 0 #000;
+      font-size: 1.05rem;
+    }
+
+    .btn-send:hover {
+      background: #00aa00;
+    }
+
+    .status {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: bold;
+      min-height: 28px;
+    }
+
+    @media (max-width: 576px) {
+      .window-body { padding: 15px; }
+      .game-tab { padding: 10px 12px; font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="window">
+    <div class="title-bar">
+      TFN SUGGESTION BOX
+    </div>
+
+    <div class="window-body">
+
+      <!-- Game Selection Tabs -->
+      <div class="game-tabs">
+        <div class="game-tab active" data-game="remade">TFN: Remade</div>
+        <div class="game-tab" data-game="plus">TFN+</div>
+      </div>
+
+      <form id="suggestionForm">
+        <div class="form-group">
+          <label for="username">YOUR PLAYER NAME</label>
+          <input type="text" class="form-control" id="username" 
+                 placeholder="e.g. PixelWarrior42" required>
+        </div>
+
+        <div class="form-group">
+          <label for="suggestion">WHAT SHOULD WE ADD?</label>
+          <textarea class="form-control" id="suggestion" rows="6" 
+                    placeholder="Describe your idea in detail..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-send">SEND SUGGESTION</button>
+      </form>
+
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+
+  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1492527805836300471/xq_FW9vDQ6FK7HixfVq9f3ae0KuLrMDTGffXIUdgYu3uw-7opgirXLb4b3si7D_rwSec";
+
+    let selectedGame = "remade";
+
+    document.querySelectorAll('.game-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        selectedGame = tab.dataset.game;
+      });
+    });
+
+    document.getElementById('suggestionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const suggestionText = document.getElementById('suggestion').value.trim();
+      const statusEl = document.getElementById('status');
+
+      if (!username || !suggestionText) {
+        statusEl.innerHTML = '<span style="color:#aa0000;">Please fill all fields!</span>';
+        return;
+      }
+
+      statusEl.textContent = 'Sending...';
+
+      const gameName = selectedGame === 'remade' ? 'TFN: Remade' : 'TFN+';
+
+      const payload = {
+        embeds: [{
+          title: `📬 New Suggestion - ${gameName}`,
+          color: 0x00C853,
+          description: suggestionText,
+          fields: [
+            { name: "Player", value: username, inline: true },
+            { name: "Game", value: gameName, inline: true }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: "TFN Suggestion System"
+          }
+        }]
+      };
+
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          statusEl.innerHTML = '<span style="color:#008000;">✅ Suggestion sent successfully!</span>';
+          e.target.reset();
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        statusEl.innerHTML = '<span style="color:#aa0000;">❌ Failed to send. Please try again.</span>';
+      }
+    });
+  </script>
+</body>
+</html>
