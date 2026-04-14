@@ -117,7 +117,7 @@
                 <p class="title">J_xtern</p>
                 <h2 class="nes-title">Welcome</h2>
                 <p>Also go by as <strong>J_X</strong></p>
-                <button class="nes-btn is-primary" onclick="showMessage('Welcome to J_Xtern!')">
+                <button class="nes-btn is-primary" onclick="showMessage('Welcome! Make yourself at "home"')">
                     Enter
                 </button>
                 <button class="nes-btn is-success" onclick="unmuteMusic()">
