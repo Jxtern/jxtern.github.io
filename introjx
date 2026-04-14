@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J_xtern | Intro</title>
+
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+
+    <link href="https://unpkg.com/psone.css@latest/psone.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            color: #fff;
+            overflow: hidden;
+            background: linear-gradient(135deg, #020024, #090979, #000000);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .split-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left, .right {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .divider {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .nes-panel {
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .nes-title {
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .psone-panel {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .contact {
+            margin-top: 1rem;
+            word-break: break-word;
+        }
+
+        .hidden-player {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+            }
+
+            .left, .right {
+                width: 100%;
+                height: 50%;
+            }
+
+            .divider {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <iframe
+        class="hidden-player"
+        src="https://www.youtube.com/embed/0yjJ2Ouj25A?autoplay=1&mute=1&loop=1&playlist=0yjJ2Ouj25A"
+        allow="autoplay"
+        allowfullscreen>
+    </iframe>
+
+    <div class="divider"></div>
+
+    <div class="split-container">
+        <div class="left">
+            <div class="nes-container with-title is-dark nes-panel">
+                <p class="title">J_xtern</p>
+                <h2 class="nes-title">Welcome</h2>
+                <p>Also go by as <strong>J_X</strong></p>
+                <button class="nes-btn is-primary" onclick="showMessage('Welcome to J_Xtern!')">
+                    Enter
+                </button>
+                <button class="nes-btn is-success" onclick="unmuteMusic()">
+                    Enable Music
+                </button>
+                <p id="message" style="margin-top: 1.5rem;"></p>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="psone-panel psone-window">
+                <div class="psone-title-bar">
+                    <span>About Me</span>
+                </div>
+                <div class="psone-content">
+                    <p><strong>J_xtern/Josh</p>
+                    <p><strong>Hobby Programmer</p>
+                    <p><strong>Nurse Apprentice</p>
+                    <p><strong>Firefighter</p>
+                    <div class="contact">
+                        <strong>Contact:</strong><br>
+                        <a href="mailto:josh@multiplayerpiano.net">
+                            josh@multiplayerpiano.net
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMessage(text) {
+            document.getElementById('message').textContent = text;
+        }
+
+        function unmuteMusic() {
+            const iframe = document.querySelector('.hidden-player');
+            if (iframe.src.includes('mute=1')) {
+                iframe.src = iframe.src.replace('mute=1', 'mute=0');
+                showMessage('Music enabled! (you will have to refresh, I wasnt bothered to add a disable button)');
+            }
+        }
+        document.body.addEventListener('click', function () {
+            const iframe = document.querySelector('.hidden-player');
+            if (iframe.src.includes('mute=1')) {
+                iframe.src = iframe.src.replace('mute=1', 'mute=0');
+            }
+        }, { once: true });
+    </script>
+
+</body>
+</html>
