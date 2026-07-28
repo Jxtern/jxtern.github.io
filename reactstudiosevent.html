@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,15 +9,18 @@
   <style>
     body {
       background: teal;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .window {
       width: 520px;
+      max-width: 100%;
     }
 
     .window-body {
@@ -29,23 +33,30 @@
       margin-bottom: 4px;
     }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       box-sizing: border-box;
     }
 
     textarea {
-      height: 110px;
+      height: 160px;
       resize: none;
     }
 
-    .row {
-      display: flex;
-      gap: 10px;
+    .info {
+      margin: 10px 0;
+      padding: 8px;
+      border: 1px solid #808080;
+      background: #ffffe1;
+      font-size: 12px;
     }
 
-    .row > div {
-      flex: 1;
+    .counter {
+      text-align: right;
+      font-size: 11px;
+      margin-top: 3px;
     }
 
     .footer {
@@ -72,131 +83,278 @@
 
 <body>
 
-<div class="window">
-  <div class="title-bar">
-    <div class="title-bar-text">React Studios Community Relations</div>
-  </div>
+  <div class="window">
 
-  <div class="window-body">
-
-    <p>Submit a structured event request for review.</p>
-
-    <div class="row">
-      <div>
-        <label>Username</label>
-        <input type="text" id="username" placeholder="Discord name" />
-      </div>
-
-      <div>
-        <label>Category</label>
-        <select id="category">
-          <option>Massive Scale</option>
-          <option>Large Scale</option>
-          <option>Small Scale</option>
-          <option>Community-Wide/Server-Wide</option>
-          <option>Other</option>
-        </select>
+    <div class="title-bar">
+      <div class="title-bar-text">
+        React Studios Community Relations
       </div>
     </div>
 
-    <label>Event Title</label>
-    <input type="text" id="title" placeholder="Short event name..." />
+    <div class="window-body">
 
-    <label>Event Idea / Description</label>
-    <textarea id="idea" placeholder="Describe the event in detail..."></textarea>
+      <p>Submit a structured event request for review.</p>
 
-    <div class="footer">
-      <div id="status" class="status"></div>
-      <button onclick="sendRequest()">Send Request</button>
+      <div class="info">
+        <strong>Important:</strong>
+        Due to Discord's limitations, the Event Idea / Description
+        is limited to 800 characters. Please keep your overview and
+        step-by-step instructions concise.
+      </div>
+
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        placeholder="Discord name"
+      />
+
+      <label for="title">Event Title</label>
+      <input
+        type="text"
+        id="title"
+        placeholder="Short event name..."
+      />
+
+
+      <label for="serverType">Event Scale</label>
+      <select id="serverType">
+        <option>Massive Scale</option>
+        <option>Large Scale</option>
+        <option>Small Scale</option>
+        <option>Community-Wide/Server-Wide</option>
+        <option>Other</option>
+      </select>
+
+      <label for="dateTime">Date and Time Hosting</label>
+      <input
+        type="text"
+        id="dateTime"
+        placeholder="Use: https://r.3v.fi/discord-timestamps/"
+      />
+
+
+      <label for="eventType">Event Type</label>
+      <input
+        type="text"
+        id="eventType"
+        placeholder="Example: Emergency Response"
+      />
+
+
+      <label for="frequency">Repeating or Single Event</label>
+      <select id="frequency">
+        <option>Single Event</option>
+        <option>Repeating Event</option>
+        <option>Both</option>
+      </select>
+
+
+      <label for="idea">Event Idea / Description</label>
+
+      <textarea
+        id="idea"
+        maxlength="800"
+        placeholder="Overview
+
+Step-by-step instructions for running the event..."
+        oninput="updateCounter()"
+      ></textarea>
+
+      <div class="counter">
+        <span id="counter">0</span>/800 characters
+      </div>
+
+      <div class="footer">
+        <div id="status" class="status"></div>
+        <button onclick="sendRequest()">Send Request</button>
+      </div>
+
     </div>
-
   </div>
-</div>
 
-<script>
-function setStatus(msg, type) {
-  const el = document.getElementById("status");
-  el.textContent = msg;
-  el.className = "status " + (type || "");
-}
+  <script>
+    function setStatus(msg, type) {
+      const el = document.getElementById("status");
 
-function sendRequest() {
-  const username = document.getElementById("username").value.trim();
-  const category = document.getElementById("category").value;
-  const title = document.getElementById("title").value.trim();
-  const idea = document.getElementById("idea").value.trim();
+      el.textContent = msg;
+      el.className = "status " + (type || "");
+    }
 
-  if (!username || !title || !idea) {
-    setStatus("Please fill all required fields.", "err");
-    return;
-  }
+    function updateCounter() {
+      const idea = document.getElementById("idea").value;
+      const counter = document.getElementById("counter");
 
-  setStatus("Sending request...", "");
+      counter.textContent = idea.length;
 
-  const webhookURL = "https://discord.com/api/webhooks/1523309013276557433/XCrSegRkBgPgwZ8mgUrZsA-Q4FoaCjhnNy9KVOYX-p6t0dskO_z9G6fGvuevlrUBxVhQ";
+      if (idea.length >= 800) {
+        counter.style.color = "darkred";
+      } else {
+        counter.style.color = "";
+      }
+    }
 
-  const payload = {
-    content: "<@&1477134064749383702>",
+    function sendRequest() {
+      const username =
+        document.getElementById("username").value.trim();
 
-    embeds: [
-      {
-        title: "Event Request Submission",
-        description: "A new event request has been submitted and is awaiting review.",
-        color: 3447003,
+      const title =
+        document.getElementById("title").value.trim();
 
-        fields: [
+      const serverType =
+        document.getElementById("serverType").value;
+
+      const dateTime =
+        document.getElementById("dateTime").value.trim();
+
+      const eventType =
+        document.getElementById("eventType").value.trim();
+
+      const frequency =
+        document.getElementById("frequency").value;
+
+      const idea =
+        document.getElementById("idea").value.trim();
+
+      if (
+        !username ||
+        !title ||
+        !dateTime ||
+        !eventType ||
+        !idea
+      ) {
+        setStatus(
+          "Please fill all required fields.",
+          "err"
+        );
+
+        return;
+      }
+
+      if (idea.length > 800) {
+        setStatus(
+          "Event description must be 800 characters or less.",
+          "err"
+        );
+
+        return;
+      }
+
+      setStatus("Sending request...", "");
+
+      const webhookURL =
+        "https://discord.com/api/webhooks/1523309013276557433/XCrSegRkBgPgwZ8mgUrZsA-Q4FoaCjhnNy9KVOYX-p6t0dskO_z9G6fGvuevlrUBxVhQ";
+
+      const payload = {
+        content: "<@&1477134064749383702>",
+
+        embeds: [
           {
-            name: "User",
-            value: username,
-            inline: true
-          },
-          {
-            name: "Category",
-            value: category,
-            inline: true
-          },
-          {
-            name: "Title",
-            value: title
-          },
-          {
-            name: "Idea",
-            value: idea
+            title: "Event Request Submission",
+
+            description:
+              "A new event request has been submitted and is awaiting review.",
+
+            color: 3447003,
+
+            fields: [
+              {
+                name: "Username",
+                value: username,
+                inline: true
+              },
+
+              {
+                name: "Event Title",
+                value: title
+              },
+
+              {
+                name: "Type of Server",
+                value: serverType,
+                inline: true
+              },
+
+              {
+                name: "Date and Time Hosting",
+                value: dateTime,
+                inline: true
+              },
+
+              {
+                name: "Event Type [See Handbook]",
+                value: eventType,
+                inline: true
+              },
+
+              {
+                name: "Repeating or Single Event",
+                value: frequency,
+                inline: true
+              },
+
+              {
+                name: "Overview / Step-by-Step Instructions",
+                value: idea
+              }
+            ],
+
+            footer: {
+              text: "React Studios Community Relations"
+            },
+
+            timestamp: new Date().toISOString()
           }
-        ],
+        ]
+      };
 
-        footer: {
-          text: "React Studios Community Relations"
+      fetch(webhookURL, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
         },
 
-        timestamp: new Date().toISOString()
-      }
-    ]
-  };
+        body: JSON.stringify(payload)
+      })
 
-  fetch(webhookURL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(res => {
-    if (res.ok) {
-      setStatus("Request sent", "ok");
+      .then(res => {
+        if (res.ok) {
 
-      document.getElementById("username").value = "";
-      document.getElementById("title").value = "";
-      document.getElementById("idea").value = "";
-    } else {
-      setStatus("failed to send", "err");
+          setStatus(
+            "Request sent",
+            "ok"
+          );
+
+
+          document.getElementById("username").value = "";
+          document.getElementById("title").value = "";
+          document.getElementById("dateTime").value = "";
+          document.getElementById("eventType").value = "";
+          document.getElementById("idea").value = "";
+
+          updateCounter();
+
+        } else {
+
+          setStatus(
+            "Failed to send",
+            "err"
+          );
+        }
+      })
+
+      .catch(() => {
+
+        setStatus(
+          "Error sending request",
+          "err"
+        );
+      });
     }
-  })
-  .catch(() => {
-    setStatus("error", "err");
-  });
-}
-</script>
+
+    updateCounter();
+  </script>
 
 </body>
 </html>
