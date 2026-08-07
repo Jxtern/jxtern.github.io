@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Studios Community Relations Event Logging</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #008080;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .window {
+            width: 720px;
+            max-width: 100%;
+        }
+
+        .window-body {
+            padding: 18px;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .required {
+            color: #800000;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .brand {
+            font-weight: bold;
+        }
+
+        .status {
+            display: none;
+            margin-top: 15px;
+            padding: 8px;
+        }
+
+        .status.success,
+        .status.error {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            React Studios Community Relations Event Logging
+        </div>
+
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="window-body">
+
+        <fieldset>
+            <legend>Event Information</legend>
+
+            <div class="field">
+                <label for="eventName">
+                    Event Name <span class="required">*</span>
+                </label>
+
+                <input
+                    id="eventName"
+                    type="text"
+                    placeholder="Enter the event name"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="field">
+                <label for="name">
+                    Name <span class="required">*</span>
+                </label>
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="field">
+                <label for="date">
+                    Date <span class="required">*</span>
+                </label>
+
+                <input id="date" type="date">
+            </div>
+
+            <div class="field">
+                <label for="role">
+                    Role <span class="required">*</span>
+                </label>
+
+                <select id="role">
+                    <option value="">Select a role</option>
+                    <option value="Hosting">Hosting</option>
+                    <option value="Co-hosting">Co-hosting</option>
+                    <option value="Helper">Helper</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="summary">
+                    Summary <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="summary"
+                    placeholder="Describe what happened during the event..."
+                ></textarea>
+            </div>
+
+            <div class="field">
+                <label for="notes">
+                    Additional Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    placeholder="Anything else Community Relations should know?"
+                ></textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Proof</legend>
+
+            <div class="field">
+                <label for="screenshot">
+                    Screenshot <span class="required">*</span>
+                </label>
+
+                <input
+                    id="screenshot"
+                    type="url"
+                    placeholder="https://example.com/screenshot.png"
+                >
+            </div>
+        </fieldset>
+
+        <div class="footer">
+            <span class="brand">
+                React Studios Community Relations
+            </span>
+
+            <button id="submitButton" type="button">
+                Submit Event Log
+            </button>
+        </div>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <div class="status-bar">
+        <p class="status-bar-field">
+            Event Logging System
+        </p>
+
+        <p class="status-bar-field">
+            Community Relations
+        </p>
+
+        <p class="status-bar-field">
+            Ready
+        </p>
+    </div>
+</div>
+
+<script>
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1535427639970496542/F1pNT4xLSkgXdZUhqef8nMWYq6fcnHRlg5nTQ8CqGAKmTkl9TVep57Xe0iXbSRONdyRw";
+
+const eventNameInput = document.getElementById("eventName");
+const nameInput = document.getElementById("name");
+const dateInput = document.getElementById("date");
+const roleInput = document.getElementById("role");
+const summaryInput = document.getElementById("summary");
+const notesInput = document.getElementById("notes");
+const screenshotInput = document.getElementById("screenshot");
+const submitButton = document.getElementById("submitButton");
+const statusBox = document.getElementById("status");
+
+dateInput.value = new Date().toISOString().split("T")[0];
+
+function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = "status " + type;
+}
+
+function resetForm() {
+    eventNameInput.value = "";
+    nameInput.value = "";
+    dateInput.value = new Date().toISOString().split("T")[0];
+    roleInput.value = "";
+    summaryInput.value = "";
+    notesInput.value = "";
+    screenshotInput.value = "";
+}
+
+async function sendWebhook() {
+    const eventName = eventNameInput.value.trim();
+    const name = nameInput.value.trim();
+    const date = dateInput.value;
+    const role = roleInput.value;
+    const summary = summaryInput.value.trim();
+    const notes = notesInput.value.trim();
+    const screenshot = screenshotInput.value.trim();
+
+    if (!eventName || !name || !date || !role || !summary || !screenshot) {
+        showStatus(
+            "Please complete all required fields.",
+            "error"
+        );
+        return;
+    }
+
+    if (
+        !screenshot.startsWith("https://") &&
+        !screenshot.startsWith("http://")
+    ) {
+        showStatus(
+            "Please enter a valid screenshot URL.",
+            "error"
+        );
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    const submittedAt = new Date();
+
+    const timeSubmitted = submittedAt.toLocaleString("en-GB", {
+        dateStyle: "short",
+        timeStyle: "medium",
+        hour12: false
+    });
+
+    const payload = {
+        username: "Community Relations Event Logging",
+        embeds: [
+            {
+                title: "React Studios Community Relations Event Logging",
+                description: "A new event log has been submitted.",
+                fields: [
+                    {
+                        name: "Event Name",
+                        value: eventName,
+                        inline: false
+                    },
+                    {
+                        name: "Name",
+                        value: name,
+                        inline: true
+                    },
+                    {
+                        name: "Date",
+                        value: date,
+                        inline: true
+                    },
+                    {
+                        name: "Role",
+                        value: role,
+                        inline: true
+                    },
+                    {
+                        name: "Summary",
+                        value: summary,
+                        inline: false
+                    },
+                    {
+                        name: "Additional Notes",
+                        value: notes || "None provided.",
+                        inline: false
+                    },
+                    {
+                        name: "Proof",
+                        value: `[Screenshot](${screenshot})`,
+                        inline: false
+                    },
+                    {
+                        name: "Time Submitted",
+                        value: timeSubmitted,
+                        inline: true
+                    }
+                ],
+                image: {
+                    url: screenshot
+                },
+                footer: {
+                    text: "React Studios Community Relations Event Logging"
+                },
+                timestamp: submittedAt.toISOString()
+            }
+        ]
+    };
+
+    try {
+        await fetch(DISCORD_WEBHOOK_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=UTF-8"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        showStatus(
+            "Event log submitted successfully.",
+            "success"
+        );
+
+        resetForm();
+    } catch (error) {
+        showStatus(
+            "Unable to submit the event log.",
+            "error"
+        );
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Event Log";
+    }
+}
+
+submitButton.addEventListener("click", sendWebhook);
+</script>
+
+</body>
+</html>
