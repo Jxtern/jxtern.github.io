@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index of /</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+
+        body {
+            padding: 18px 22px;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #0000ee;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        a:visited {
+            color: #0000ee;
+        }
+
+        .header {
+            font-size: 13px;
+            font-weight: normal;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #999;
+            margin-bottom: 8px;
+        }
+
+        .error {
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .path {
+            margin-bottom: 8px;
+        }
+
+        .listing {
+            width: 100%;
+            max-width: 950px;
+            border-collapse: collapse;
+        }
+
+        .listing th {
+            text-align: left;
+            font-weight: normal;
+            color: #555;
+            border-bottom: 1px solid #999;
+            padding: 3px 8px 4px 4px;
+        }
+
+        .listing td {
+            padding: 5px 8px 5px 4px;
+            vertical-align: top;
+        }
+
+        .listing tr:hover td {
+            background: #f4f4f4;
+        }
+
+        .name {
+            width: 55%;
+        }
+
+        .size {
+            width: 15%;
+            color: #555;
+        }
+
+        .modified {
+            width: 20%;
+            color: #555;
+        }
+
+        .type {
+            width: 10%;
+            color: #555;
+        }
+
+        .folder::before {
+            content: "[DIR] ";
+            color: #777;
+        }
+
+        .file::before {
+            content: "[FILE] ";
+            color: #777;
+        }
+
+        .directory-view {
+            display: block;
+        }
+
+        .transcript-view {
+            display: none;
+            max-width: 950px;
+        }
+
+        .file-title {
+            border-bottom: 1px solid #999;
+            padding-bottom: 6px;
+            margin-bottom: 18px;
+        }
+
+        .back {
+            margin-bottom: 15px;
+        }
+
+        .transcript-text {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 12px;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .poem {
+            margin-top: 28px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .poem-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        /*
+            "gone" is intentionally invisible as a link
+            until the player hovers over it.
+        */
+
+        .gone {
+            color: inherit;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .gone:hover {
+            color: #0000ee;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 6px;
+            border-top: 1px solid #ccc;
+            color: #888;
+            font-size: 10px;
+        }
+
+        .password-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.96);
+            z-index: 10;
+        }
+
+        .password-box {
+            width: 320px;
+            margin: 100px auto;
+            border: 1px solid #999;
+            background: #fff;
+            padding: 14px;
+            box-sizing: border-box;
+        }
+
+        .password-title {
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+        }
+
+        .password-box input {
+            width: 100%;
+            height: 20px;
+            box-sizing: border-box;
+            border: 1px solid #888;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .password-buttons {
+            margin-top: 10px;
+        }
+
+        .password-buttons button {
+            font-size: 11px;
+            padding: 2px 9px;
+        }
+
+        .password-error {
+            display: none;
+            margin-top: 10px;
+            color: #800000;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header" id="pageTitle">
+        Index of /
+    </div>
+
+    <div class="error">
+        Failed to request files from server.
+    </div>
+
+    <div id="directory" class="directory-view">
+
+        <div class="path">
+            /
+        </div>
+
+        <table class="listing">
+
+            <tr>
+                <th class="name">Name</th>
+                <th class="size">Size</th>
+                <th class="modified">Last modified</th>
+                <th class="type">Type</th>
+            </tr>
+
+            <tr>
+                <td class="name">
+                    <a class="folder" onclick="openMembers()">members</a>
+                </td>
+
+                <td class="size">
+                    -
+                </td>
+
+                <td class="modified">
+                    09/24/22
+                </td>
+
+                <td class="type">
+                    directory
+                </td>
+            </tr>
+
+            <tr>
+                <td class="name">
+                    <a class="folder" onclick="openTranscripts()">transcripts</a>
+                </td>
+
+                <td class="size">
+                    -
+                </td>
+
+                <td class="modified">
+                    09/24/22
+                </td>
+
+                <td class="type">
+                    directory
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="footer" id="footer">
+            2 directories
+        </div>
+
+    </div>
+
+    <div id="transcripts" class="directory-view" style="display:none;">
+
+        <div class="path">
+            <a onclick="openHome()">/</a>/transcripts
+        </div>
+
+        <table class="listing">
+
+            <tr>
+                <th class="name">Name</th>
+                <th class="size">Size</th>
+                <th class="modified">Last modified</th>
+                <th class="type">Type</th>
+            </tr>
+
+            <tr>
+                <td class="name">
+                    <a class="file" onclick="openTranscript1()">
+                        transcript22.00.24.22.09.2
+                    </a>
+                </td>
+
+                <td class="size">
+                    1 KB
+                </td>
+
+                <td class="modified">
+                    09/24/22
+                </td>
+
+                <td class="type">
+                    text
+                </td>
+            </tr>
+
+            <tr>
+                <td class="name">
+                    <a class="file" onclick="openTranscript2()">
+                        transcript22.59.22.24.09
+                    </a>
+                </td>
+
+                <td class="size">
+                    2 KB
+                </td>
+
+                <td class="modified">
+                    09/24/22
+                </td>
+
+                <td class="type">
+                    text
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="footer">
+            2 files
+        </div>
+
+    </div>
+
+    <div id="transcript1" class="transcript-view">
+
+        <div class="back">
+            <a onclick="openTranscripts()">← back to /transcripts</a>
+        </div>
+
+        <div class="file-title">
+            transcript22.00.24.22.09.2
+        </div>
+
+        <div class="transcript-text">you were supposed to have done this yesterday.
+
+i know.
+
+then why am i hearing about it now?
+
+because there was a problem.
+
+what kind of problem?
+
+nothing that matters anymore.
+
+you sound tired.
+
+i am.
+
+did you do what i told you to do?
+
+i did.
+
+and?
+
+they did not question it at all, which is good.
+
+you were sure?
+
+yes.
+
+good.
+
+is everything at the castle ready?
+
+almost.
+
+almost isn't ready.
+
+i know.
+
+the east room?
+
+empty.
+
+the chapel?
+
+prepared.
+
+and the others?
+
+they're where you asked them to be.
+
+all of them?
+
+all but one.
+
+who?
+
+...
+
+you know who.
+
+don't write his name here.
+
+understood.
+
+good.
+
+prepare the castle.
+
+you did well.</div>
+
+        <div class="footer">
+            1 file
+        </div>
+
+    </div>
+
+
+    <div id="transcript2" class="transcript-view">
+
+        <div class="back">
+            <a onclick="openTranscripts()">← back to /transcripts</a>
+        </div>
+
+        <div class="file-title">
+            transcript22.59.22.24.09
+        </div>
+
+        <div class="transcript-text">Shit, shit.
+
+We have to go now.
+
+I knew it.
+
+You said it wouldn't happen until morning.
+
+I was wrong.
+
+What happened?
+
+I don't know.
+
+Then what are you talking about?
+
+The chapel.
+
+What about it?
+
+The doors were locked.
+
+And?
+
+They're open now.
+
+Did you open them?
+
+No.
+
+Then who did?
+
+I don't know.
+
+Get the others.
+
+They're already gone.
+
+What do you mean, gone?
+
+I mean they're not here.
+
+The rooms are empty.
+
+All of them?
+
+Yes.
+
+So you are telling me they just vanished?
+
+Check for yourself, I am going</div>
+
+
+<div class="poem">
+    <div class="poem-title">
+        The King’s Last Prayer
+    </div>
+The kids in the chapel had their mouths sewn shut
+but they were still making noise.
+The king was on his knees at the altar
+asking for something else.
+They pointed behind him.
+His crown was moving.
+Next morning he was on the throne
+smiling with empty eyes,
+body all swollen,
+little handprints pushing out from under the skin.
+The kids were <span class="gone" onclick="copyClue()">gone</span>.
+Just the writing on it left:
+“He asked. He was given. He asked again.”
+</div>
+
+
+    <!-- PASSWORD DIALOG -->
+
+    <div id="passwordOverlay" class="password-overlay">
+
+        <div class="password-box">
+
+            <div class="password-title">
+                /members
+            </div>
+
+            <div>
+                This directory requires authorization.
+            </div>
+
+            <input
+                id="password"
+                type="password"
+                autocomplete="off"
+            >
+
+            <div class="password-buttons">
+
+                <button onclick="submitPassword()">
+                    OK
+                </button>
+
+                <button onclick="closePassword()">
+                    Cancel
+                </button>
+
+            </div>
+
+            <div id="passwordError" class="password-error">
+                Access denied.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const directory =
+            document.getElementById("directory");
+
+        const transcripts =
+            document.getElementById("transcripts");
+
+        const transcript1 =
+            document.getElementById("transcript1");
+
+        const transcript2 =
+            document.getElementById("transcript2");
+
+        const passwordOverlay =
+            document.getElementById("passwordOverlay");
+
+        const password =
+            document.getElementById("password");
+
+        const passwordError =
+            document.getElementById("passwordError");
+
+        const pageTitle =
+            document.getElementById("pageTitle");
+
+
+        function hideViews() {
+
+            directory.style.display = "none";
+
+            transcripts.style.display = "none";
+
+            transcript1.style.display = "none";
+
+            transcript2.style.display = "none";
+        }
+
+
+        function openHome() {
+
+            hideViews();
+
+            directory.style.display = "block";
+
+            pageTitle.innerText = "Index of /";
+        }
+
+
+        function openTranscripts() {
+
+            hideViews();
+
+            transcripts.style.display = "block";
+
+            pageTitle.innerText =
+                "Index of /transcripts";
+        }
+
+
+        function openTranscript1() {
+
+            hideViews();
+
+            transcript1.style.display = "block";
+
+            pageTitle.innerText =
+                "transcript22.00.24.22.09.2";
+        }
+
+
+        function openTranscript2() {
+
+            hideViews();
+
+            transcript2.style.display = "block";
+
+            pageTitle.innerText =
+                "transcript22.59.22.24.09";
+        }
+
+
+        function openMembers() {
+
+            password.value = "";
+
+            passwordError.style.display = "none";
+
+            passwordOverlay.style.display = "block";
+
+            setTimeout(() => {
+                password.focus();
+            }, 50);
+        }
+
+
+        function closePassword() {
+
+            passwordOverlay.style.display = "none";
+        }
+
+
+        function submitPassword() {
+
+            /*
+                No password is accepted.
+                The directory is intentionally inaccessible.
+            */
+
+            password.value = "";
+
+            passwordError.style.display = "block";
+
+            setTimeout(() => {
+                password.focus();
+            }, 50);
+        }
+
+
+        function copyClue() {
+
+            const clue =
+                "RmFsbGFjaWEgdmVyYm9ydW0gb3BlcmFyaSBkZWJ1aXQsIGFsaWJpIG1lIGNvbnZlbml0ZSwgaG9taW5lcyBkZSBob2Mgc2NpdW50Lg==";
+
+            navigator.clipboard.writeText(clue).catch(() => {
+
+                const temp =
+                    document.createElement("textarea");
+
+                temp.value = clue;
+
+                temp.style.position = "fixed";
+                temp.style.left = "-9999px";
+
+                document.body.appendChild(temp);
+
+                temp.select();
+
+                document.execCommand("copy");
+
+                document.body.removeChild(temp);
+
+            });
+
+        }
+
+
+        password.addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                submitPassword();
+            }
+
+            if (event.key === "Escape") {
+                closePassword();
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
