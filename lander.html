@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background: #020202;
+            overflow: hidden;
+        }
+
+        body {
+            color: #020202;
+        }
+
+        #archive {
+            display: none;
+        }
+
+        #input {
+            position: fixed;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: transparent;
+            caret-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="archive" data-record="Y29ydnVzIHRlIHNhbHV0YXZpdCwgbm9tZW4gZWl1cyBpbnNjcmliZSwgZXQgaW5ncmVkaSBwb3Rlcy4="></div>
+
+    <input id="input" type="text" autocomplete="off" spellcheck="false">
+
+    <script>
+        const input = document.getElementById("input");
+
+        const key = [
+            99, 114, 111, 119
+        ].map(n => String.fromCharCode(n)).join("");
+
+        const destination = [
+            "aHR0cHM6Ly9qeHRlcm4uZ2l0aHViLmlvLzkyNDIyYQ=="
+        ];
+
+        let buffer = "";
+
+        window.addEventListener("load", () => {
+            input.focus();
+        });
+
+        document.addEventListener("click", () => {
+            input.focus();
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key.length !== 1) return;
+
+            buffer += event.key.toLowerCase();
+
+            if (buffer.length > key.length) {
+                buffer = buffer.slice(-key.length);
+            }
+
+            if (buffer === key) {
+                const decoded = atob(destination[0]);
+                window.location.replace(decoded);
+            }
+        });
+    </script>
+</body>
+</html>
